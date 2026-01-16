@@ -11,6 +11,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 Route::resource('/tasks', TaskController::class);
 
 Route::middleware('auth')->group(function () {

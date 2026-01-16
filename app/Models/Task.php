@@ -13,7 +13,7 @@ class Task extends Model
     protected $fillable = ['title', 'description', 'assigned_to', 'due_date', 'status'];
 
     public function employee(){
-        return $this->belongsTo(Employee::class, 'assigned_to');
+        return $this->belongsTo(employee::class, 'assigned_to');
 
     }
 }
