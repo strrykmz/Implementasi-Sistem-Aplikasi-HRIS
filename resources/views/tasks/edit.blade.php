@@ -20,7 +20,7 @@
                     <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('tasks.index') }}">Task</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">New</li>
+                        <li class="breadcrumb-item active" aria-current="page">Edit</li>
                     </ol>
                 </nav>
             </div>
@@ -34,11 +34,17 @@
                 </h5>
             </div>
             <div class="card-body">
-                <form action="{{ route('tasks.store') }}" method="POST">
+
+            @if(session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
+
+                <form action="{{ route('tasks.update', $task->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="mb-2">
                         <label for="" class="form-label">Title</label>
-                        <input type="text" class="form-control" name="title" required>
+                        <input type="text" class="form-control" name="title" value="{{ old('title', $task->title) }}" required>
                         @error('title')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -49,7 +55,7 @@
                         <select name="assigned_to" class="form-control @error('assigned_to') is-invalid @enderror">
                             <option value="">Select An Employee</option>
                             @foreach ($employees as $employee)
-                                <option value="{{ $employee->id }}">{{ $employee->fullname }}</option>
+                                <option value="{{ $employee->id }}" @if (old('assigned_to',$task->assigned_to) == $employee->id) selected @endif>{{ $employee->fullname }}</option>
                             @endforeach
                         </select>
                         @error('assigned_to')
@@ -59,7 +65,7 @@
 
                     <div class="mb-3">
                         <label for="" class="form-label">Due Date</label>
-                        <input type="datetime-local" class="date form-control @error('due_date') is-invalid @enderror" value="{{ @old('due_date') }}" name="due_date" required>
+                        <input type="date-local" class="date form-control @error('due_date') is-invalid @enderror" value="{{ @old('due_date', $task->due_date) }}" name="due_date" required>
                         @error('title')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -67,9 +73,9 @@
                     <div class="mb-3">
                         <label for="" class="form-label">Status</label>
                         <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
-                            <option value="pending">Pending</option>
-                            <option value="on progress">On progress</option>
-                            <option value="done">Done</option>
+                            <option value="pending" @if (old('status',$task->status) == 'pending') selected @endif>Pending</option>
+                            <option value="on progress" @if (old('status',$task->status) == 'on progress') selected @endif>On progress</option>
+                            <option value="done" @if (old('status',$task->status) == 'done') selected @endif>Done</option>
                         </select>
                         @error('due_date')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -77,12 +83,12 @@
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label">Description</label>
-                        <textarea name="description" class="form-control @error('description') is-invalid @enderror"></textarea>
+                        <textarea name="description" class="form-control @error('description') is-invalid @enderror">{{ old('description', $task->description) }}</textarea>
                         @error('description')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary">Create Task</button>
+                    <button type="submit" class="btn btn-primary">Update Task</button>
                     <a href="{{ route('tasks.index') }}" class="btn btn-primary">Back to List</a>
                 </form>
         

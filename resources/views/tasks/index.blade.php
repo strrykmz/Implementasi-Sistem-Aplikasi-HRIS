@@ -18,8 +18,8 @@
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="">Task</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('tasks.index') }}">Task</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Index</li>
                     </ol>
                 </nav>
@@ -65,18 +65,25 @@
                                 @elseif ($task->status == 'done')
                                 <span class="text-success">Done</span>
                                 @elseif ($task->status == 'overdue')
-                                <span class="text-Danger">Overdue</span>
+                                <span class="text-danger">Overdue</span>
+                                @elseif ($task->status == 'on progress')
+                                <span class="text-warning">On Progress</span>
                                 @endif
                             </td>
                             <td>
-                                <a href="" class="btn btn-primary btn-sm">View</a>
+                                <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-primary btn-sm">View</a>
                                 @if ($task->status == 'pending')
-                                <a href="" class="btn btn-success btn-sm">Mark as Done</a>
+                                <a href="{{ route('tasks.done', $task->id) }}" class="btn btn-success btn-sm">Mark as Done</a>
                                 @else
-                                <a href="" class="btn btn-warning btn-sm">Mask as Pending</a>
+                                <a href="{{ route('tasks.pending', $task->id) }}" class="btn btn-warning btn-sm">Mask as Pending</a>
                                 @endif
-                                <a href="" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="" class="btn btn-danger btn-sm">Delete</a>
+                                <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-warning btn-sm">Edit</a>
+
+                                <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display: inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
                             </td>
                         </tr>
 
