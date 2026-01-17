@@ -19,7 +19,7 @@
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('employees.index') }}">Task</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('employees.index') }}">Employees</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Edit</li>
                     </ol>
                 </nav>
@@ -63,8 +63,16 @@
                     </div>
 
                     <div class="mb-2">
+                        <label for="" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" name="phone_number" value="{{ old('phone_number', $employee->phone_number) }}" required>
+                        @error('phone_number')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-2">
                         <label for="" class="form-label">Address</label>
-                        <textarea type="text" class="form-control" name="address" value="{{ old('address', $employee->address) }}" required></textarea>
+                        <textarea type="text" class="form-control" name="address" required>{{ old('address', $employee->address) }}</textarea>
                         @error('address')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -91,7 +99,7 @@
                         <select name="department_id" class="form-control @error('department_id') is-invalid @enderror">
                             <option value="">Select an Department</option>
                             @foreach ($departments as $department )
-                                <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                <option value="{{ $department->id }}" @if (old('department_id', $employee->department_id) == $department->id) selected @endif>{{ $department->name }}</option>
                             @endforeach
                         </select>
                         @error('department_id')
@@ -104,7 +112,7 @@
                         <select name="role_id" class="form-control @error('role_id') is-invalid @enderror">
                             <option value="">Select an Role</option>
                             @foreach ($roles as $role )
-                                <option value="{{ $role->id }}">{{ $role->title }}</option>
+                                <option value="{{ $role->id }}" @if (old('role_id', $employee->role_id) == $role->id) selected @endif>{{ $role->title }}</option>
                             @endforeach
                         </select>
                         @error('role_id')
