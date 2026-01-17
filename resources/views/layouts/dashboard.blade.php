@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Mazer Admin Dashboard</title>
+    <title>Dashboard - Human Resouce App</title>
     
     
     <link rel="shortcut icon" href="{{ asset('mazer/dist/assets/compiled/svg/favicon.svg ')}}" type="image/x-icon">
@@ -26,7 +26,7 @@
     <div class="sidebar-header position-relative">
         <div class="d-flex justify-content-between align-items-center">
             <div class="logo">
-                <a href="index.html"><img src="{{ asset('mazer/dist/assets/compiled/svg/logo.svg ')}}" alt="Logo" srcset=""></a>
+                <a href="{{ route('dashboard') }}"><img src="{{ asset('asset/logoipsum-410.svg')}}" alt="Logo" srcset=""></a>
             </div>
             <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
