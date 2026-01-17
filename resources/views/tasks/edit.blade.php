@@ -66,7 +66,7 @@
                     <div class="mb-3">
                         <label for="" class="form-label">Due Date</label>
                         <input type="date-local" class="date form-control @error('due_date') is-invalid @enderror" value="{{ @old('due_date', $task->due_date) }}" name="due_date" required>
-                        @error('title')
+                        @error('due_date')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -77,7 +77,7 @@
                             <option value="on progress" @if (old('status',$task->status) == 'on progress') selected @endif>On progress</option>
                             <option value="done" @if (old('status',$task->status) == 'done') selected @endif>Done</option>
                         </select>
-                        @error('due_date')
+                        @error('status')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

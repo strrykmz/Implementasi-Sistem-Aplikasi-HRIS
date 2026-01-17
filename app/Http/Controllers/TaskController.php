@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Models\Task;
 
@@ -73,4 +74,12 @@ class TaskController extends Controller
         $task->delete();
         return redirect()->route('tasks.index')->with('success', 'Task Deleted successfully. ');
     }
+
+    public function exportTask($id)
+    {
+        $task = Task::with('Employee')->findOrFail($id);
+        $pdf = Pdf::loadView('pdf.task_detail', compact('task'));
+        return $pdf->download('task-'. $task->id . '-' . date('Ymd') . '.pdf');
+    }
+
 }

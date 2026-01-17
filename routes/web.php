@@ -3,7 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
-use App\Http\Controllers\DashboardController; 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\TaskController; 
 
 Route::get('/', function () {
@@ -12,11 +13,13 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::resource('/employees', TaskController::class);
+Route::resource('/employees', EmployeeController::class);
 
 Route::resource('/tasks', TaskController::class);
 Route::get('task/done/{id}', [TaskController::class, 'done'])->name('tasks.done');
 Route::get('task/pending/{id}', [TaskController::class, 'pending'])->name('tasks.pending');
+Route::get('task/export/{id}', [TaskController::class, 'exportTask'])->name('task.exportTask');
+
 
 
 Route::middleware('auth')->group(function () {

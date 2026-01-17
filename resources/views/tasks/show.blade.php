@@ -62,6 +62,7 @@
                     <label for="">Description</label>
                     <p>{{ $task->description }}</p>
                 </div>
+                <a href="{{ route('task.exportTask', $task->id) }}" class="btn btn-secondary">Export as PDF</a>
                 <a href="{{ route('tasks.index') }}" class="btn btn-secondary">Back to List</a>
             </div>
     </section>

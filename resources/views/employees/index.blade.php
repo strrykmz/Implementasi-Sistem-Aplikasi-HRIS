@@ -35,7 +35,7 @@
             </div>
             <div class="card-body">
                 <div class="d-flex">
-                    <a href="{{ route('') }}" class="btn btn-primary mb-3 ms-auto">New Employees</a>
+                    <a href="{{ route('employees.create') }}" class="btn btn-primary mb-3 ms-auto">New Employees</a>
                 </div>
 
                 @if (session('success'))
@@ -50,7 +50,7 @@
                             <th>Address</th>
                             <th>Birth Date</th>
                             <th>Hire Date</th>
-                            <th>Departement</th>
+                            <th>Department</th>
                             <th>Role</th>
                             <th>Status</th>
                             <th>Salary</th>
@@ -66,17 +66,25 @@
                             <td>{{ $employee->address }}</td>
                             <td>{{ $employee->birth_date }}</td>
                             <td>{{ $employee->hire_date }}</td>
-                            <td>{{ $employee->departement }}</td>
-                            <td>{{ $employee->role }}</td>
+                            <td>{{ $employee->department->name }}</td>
+                            <td>{{ $employee->role->title }}</td>
                             <td>
                                 @if ($employee->status == 'active')
-                                    <span class="text-success">{{ $employee->status }}</span>
+                                    <span class="text-success">{{ ucfirst($employee->status) }}</span>
                                 @else
-                                    <span class="text-danger">{{ $employee->status }}</span>
+                                    <span class="text-warning">{{ ucfirst($employee->status) }}</span>
                                 @endif
                             </td>
-                            <td>{{ $employee->salary }}</td>
-                            <td></td>
+                            <td>{{ '$'.number_format($employee->salary) }}</td>
+                            <td>
+                                <a href="{{ route('employees.show', $employee->id) }}" target="_blank" class="btn btn-info btn-sm" rel="noopener noreferrer">View</a>
+                                <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Sure?')">Delete</button>
+                                </form>
+                            </td>
                         </tr>
 
                         @endforeach
@@ -87,7 +95,4 @@
         
     </section>
 </div>
-
-</div>
-
 @endsection

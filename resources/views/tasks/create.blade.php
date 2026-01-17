@@ -71,7 +71,7 @@
                             <option value="on progress">On progress</option>
                             <option value="done">Done</option>
                         </select>
-                        @error('due_date')
+                        @error('status')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
